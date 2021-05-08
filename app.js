@@ -4,31 +4,23 @@ const usersCount = 10;
 const usersContainer = document.getElementById('wrapper');
 
 
-// async function request (route, options = {method: "GET"}) {
-//   const API_URL = "https://jsonplaceholder.typicode.com";
-//   return await fetch(`${API_URL}/${route}`, options)
-//   .then((response) => {response.json()});
-// }
-
-// async function fetchUsers(id){
-//   try{
-//     const response = await request(`users/${id}`);
-//     return response;
-//   }catch(err){
-//     console.log(err);
-//     throw err;
-//   }
-// }
-
-async function fetchUsers(id)  {
-	try {
-		const url = `https://jsonplaceholder.typicode.com/users/${id}`;
-		const res = await fetch(url).then(res => res.json());
-		return res
-	} catch (err) {
-		console.error(err)
-	}
+async function request (route, options = {method: "GET"}) {
+  const API_URL = "https://jsonplaceholder.typicode.com";
+  return await fetch(`${API_URL}/${route}`, options)
+  .then((response) => {return response.json()});
 }
+
+async function fetchUsers(id){
+  try{
+    const response = await request(`users/${id}`);
+    return response;
+  }catch(err){
+    console.log(err);
+    throw err;
+  }
+}
+
+
 
 async function getAllUsers() {
 	try {
