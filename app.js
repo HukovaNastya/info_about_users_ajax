@@ -39,23 +39,10 @@ function renderUsers(arr) {
 
 function createUsersTabs (response){
   const fragment = document.createDocumentFragment();
-  response.forEach( user => {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    const cardBody = document.createElement('div');
-    cardBody.classList.add('card-body');
-    const tittle = document.createElement('h5');
-    tittle.classList.add('card-title');
-    tittle.textContent = user.name;
-    const article = document.createElement('p');
-    article.classList.add('card-text');
-    article.textContent = user.email;
-    cardBody.appendChild(tittle);
-    cardBody.appendChild(article);
-    card.appendChild(cardBody);
-    fragment.appendChild(card);
-  })
-  container.appendChild(fragment);
+
+
+
+  usersContainer.appendChild(fragment);
  }
 
 getAllUsers();
