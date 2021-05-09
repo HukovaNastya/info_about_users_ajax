@@ -1,8 +1,5 @@
-
-
 const usersCount = 10;
 const usersContainer = document.getElementById('wrapper');
-
 
 async function request (route, options = {method: "GET"}) {
   const API_URL = "https://jsonplaceholder.typicode.com";
@@ -20,10 +17,8 @@ async function fetchUsers(id){
   }
 }
 
-
-
 async function getAllUsers() {
-	try {
+	try{
 		const arrayOfPromises = Array.from(new Array(usersCount)).map((user, index) => fetchUsers(index + 1))
 		const arrayOfUsersData = await Promise.all(arrayOfPromises);
     console.log(arrayOfUsersData)
@@ -39,20 +34,16 @@ function renderUsers(arr) {
 		const el = createUsersTabs(item)
 		fragment.appendChild(el)
 	})
-
 	UsersContainer.appendChild(fragment)
 }
-
-
-
 
 function createUsersTabs (response){
   const fragment = document.createDocumentFragment();
   response.forEach( user => {
-     const card = document.createElement('div');
-     card.classList.add('card');
-     const cardBody = document.createElement('div');
-     cardBody.classList.add('card-body');
+    const card = document.createElement('div');
+    card.classList.add('card');
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
     const tittle = document.createElement('h5');
     tittle.classList.add('card-title');
     tittle.textContent = user.name;
