@@ -80,7 +80,7 @@ body {
 }
 .tabs__block:nth-child(2):before {
 	background-color: #9278aa;
-	left: 33.333%;
+	left: 10%;
 }
 .tabs__block:nth-child(3) {
 	background-color: #97c67d;

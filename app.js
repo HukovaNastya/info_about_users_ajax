@@ -28,21 +28,28 @@ async function getAllUsers() {
 	}
 }
 
-function renderUsers(arr) {
-	const fragment = document.createDocumentFragment()
-	arr.forEach(item => {
-		const el = createUsersTabs(item)
-		fragment.appendChild(el)
-	})
-	UsersContainer.appendChild(fragment)
-}
 
-function createUsersTabs (response){
+
+function createUsersTabs (respanse){
   const fragment = document.createDocumentFragment();
-
-
-
-  usersContainer.appendChild(fragment);
+  response.forEach( user => {
+    const content = document.createElement('div');
+    content.classList.add('content');
+    const tabs = document.createElement('div');
+    tabs.classList.add('tabs');
+    const tabsItems = document.createElement('div');
+    tabsItems.classList.add('tabs__items');
+    const tabsItem = document.createElement('a');
+    tabsItem.classList.add('tabs__item');
+    const span = document.createElement('span');
+    span.textContent = user.name;
+    tabsItem.appendChild(span);
+    tabsItems.appendChild(tabsItem);
+    tabs.appendChild(tabsItem);
+    content.appendChild(tabs);
+    fragment.appendChild(content);
+ })
+ usersContainer.appendChild(fragment);
  }
 
 getAllUsers();
