@@ -26,30 +26,30 @@ const tabsBody = document.querySelector('.tabs__body');
 //   }
 // ]
 
-async function request(route, options = {method: "GET"}) {
+async function request(route, options = { method: "GET" }) {
   const API_URL = "https://jsonplaceholder.typicode.com";
   return await fetch(`${API_URL}/${route}`, options)
-  .then((response) => {return response.json()});
+    .then((response) => { return response.json() });
 }
 
-async function fetchUsers(id){
-  try{
+async function fetchUsers(id) {
+  try {
     const response = await request(`users/${id}`);
     return response;
-  }catch(err){
+  } catch (err) {
     console.log(err);
     throw err;
   }
 }
 
 async function getAllUsers() {
-	try{
-      const arrayOfPromises = Array.from(new Array(usersCount)).map((user, index) => fetchUsers(index + 1));
-      const arrayOfUsersData = await Promise.all(arrayOfPromises);
-      return arrayOfUsersData
-	} catch (err) {
-	  console.error(err);
-	}
+  try {
+    const arrayOfPromises = Array.from(new Array(usersCount)).map((user, index) => fetchUsers(index + 1));
+    const arrayOfUsersData = await Promise.all(arrayOfPromises);
+    return arrayOfUsersData
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 function renderTabs(users) {
@@ -62,7 +62,7 @@ function renderTabs(users) {
 function createTabsWrapper() {
   const wrapper = document.createElement('nav')
   wrapper.classList.add('tabs__items')
-  return  wrapper
+  return wrapper
 }
 
 function createTabItem(id, name) {
@@ -81,7 +81,7 @@ function setTabsEvents() {
 function renderTabsContent(users) {
   console.log(users)
   const tabsBlock = createTabsContentBody();
-  users.forEach(user => tabsBlock.insertAdjacentHTML('beforeend', createTabBlock(user.id, user.username, user.email, user.adress)));
+  users.forEach(user => tabsBlock.insertAdjacentHTML('beforeend', createTabBlock(user.id, user.username, user.email, user.address)));
   tabsBody.appendChild(tabsBlock);
 }
 
@@ -91,12 +91,26 @@ function createTabsContentBody() {
   return tabsBlock;
 }
 
-function createTabBlock(id, username, email, address, geo) {
-  return `
-  <div id="#tab_${id}" data-user-id="${id}" class="tabs__block">
-     <p> ${username} ${email} ${address} ${geo} </p>
-  </div>
-  `
+function createTabBlock(id, username, email, address) {
+  const tabStr = `
+    <div id="tab_${id}" data-user-id="${id}" class="tabs__block">
+       <p> username: ${username} (email:  ${email})</p>
+       <p> ${addressToString(address)} </p>
+       <p> ${geoToString(address.geo)} </p>
+    </div>
+  `;
+  console.log(tabStr)
+  return tabStr;
+}
+
+function addressToString(address) {
+  const addressSring = `${address.zipcode} - ${address.city}, ${address.street} ${address.suite}`;
+  return addressSring;
+}
+
+function geoToString(geo) {
+  const str = `X: ${geo.lat} Y: ${geo.lng}`;
+  return str;
 }
 
 function tabItemClickHandler(evt) {
@@ -111,7 +125,6 @@ function tabItemClickHandler(evt) {
 async function initApp() {
   try {
     const users = await getAllUsers()
-
     renderTabs(users)
     renderTabsContent(users)
     setTabsEvents()
@@ -123,5 +136,7 @@ async function initApp() {
     console.error(err)
   }
 }
+
+
 
 initApp();
