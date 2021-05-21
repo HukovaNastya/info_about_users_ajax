@@ -1,6 +1,7 @@
 const usersContainer = document.querySelector('.content');
 const usersCount = 10;
 const tabsBody = document.querySelector('.tabs__body');
+let users;
 
 
 // const usersIds = [
@@ -56,7 +57,7 @@ function renderTabs(users) {
   const wrapper = createTabsWrapper()
   users.forEach(user => wrapper.insertAdjacentHTML('beforeend', createTabItem(user.id, user.name)))
 
-  usersContainer.appendChild(wrapper)
+  usersContainer.prepend(wrapper)
 }
 
 function createTabsWrapper() {
@@ -75,7 +76,8 @@ function createTabItem(id, name) {
 
 function setTabsEvents() {
   const items = document.querySelectorAll('.tabs__item')
-  items.forEach(item => item.addEventListener('click', tabItemClickHandler))
+  items.forEach(item => item.addEventListener('click', tabItemClickHandler));
+
 }
 
 function renderTabsContent(users) {
@@ -115,16 +117,20 @@ function geoToString(geo) {
 
 function tabItemClickHandler(evt) {
   const target = evt.currentTarget.getAttribute('href')
-  console.log(target)
+  console.log(target);
 
   const userId = evt.currentTarget.getAttribute('data-user-id')
-  console.log(userId)
+  console.log(userId);
+
+  let currentTab = document.querySelector(target);
+  currentTab.classList.add('tabs__block-active');
+
 
 }
 
 async function initApp() {
   try {
-    const users = await getAllUsers()
+    users = await getAllUsers()
     renderTabs(users)
     renderTabsContent(users)
     setTabsEvents()
