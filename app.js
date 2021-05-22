@@ -108,13 +108,16 @@ function tabItemClickHandler(evt) {
 
 
 
-  tabsList.forEach(function(item){
-   item.classList.remove('tabs__block-active')
 
-  })
+  if(currentTab){
+    tabsList.forEach(function(item){
+      item.classList.remove('tabs__block-active')
+
+     })
+
+  }
 
   currentTab.classList.add('tabs__block-active');
-
 
 }
 
