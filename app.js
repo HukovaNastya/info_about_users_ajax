@@ -2,30 +2,11 @@ const usersContainer = document.querySelector('.content');
 const usersCount = 10;
 const tabsBody = document.querySelector('.tabs__body');
 let users;
+const tabsList =  document.querySelectorAll('.tabs__block');
+// console.log(tabsList)
 
 
-// const usersIds = [
-//   {
-//     "id": 1,
-//     "name": "Leanne Graham",
-//   },
-//   {
-//     "id": 2,
-//     "name": "Ervin Howell",
-//   },
-//   {
-//     "id": 3,
-//     "name": "Clementine Bauch",
-//   },
-//   {
-//     "id": 4,
-//     "name": "Patricia Lebsack",
-//   },
-//   {
-//     "id": 5,
-//     "name": "Chelsey Dietrich",
-//   }
-// ]
+
 
 async function request(route, options = { method: "GET" }) {
   const API_URL = "https://jsonplaceholder.typicode.com";
@@ -81,7 +62,7 @@ function setTabsEvents() {
 }
 
 function renderTabsContent(users) {
-  console.log(users)
+  // console.log(users)
   const tabsBlock = createTabsContentBody();
   users.forEach(user => tabsBlock.insertAdjacentHTML('beforeend', createTabBlock(user.id, user.username, user.email, user.address)));
   tabsBody.appendChild(tabsBlock);
@@ -90,18 +71,19 @@ function renderTabsContent(users) {
 function createTabsContentBody() {
   const tabsBlock = document.createElement('div');
   tabsBlock.classList.add('tabs__block');
+
   return tabsBlock;
 }
 
 function createTabBlock(id, username, email, address) {
   const tabStr = `
-    <div id="tab_${id}" data-user-id="${id}" class="tabs__block">
+    <div id="tab_${id}" data-user-id="${id}" class="tabs__list">
        <p> username: ${username} (email:  ${email})</p>
        <p> ${addressToString(address)} </p>
        <p> ${geoToString(address.geo)} </p>
     </div>
   `;
-  console.log(tabStr)
+  // console.log(tabStr)
   return tabStr;
 }
 
@@ -116,13 +98,21 @@ function geoToString(geo) {
 }
 
 function tabItemClickHandler(evt) {
-  const target = evt.currentTarget.getAttribute('href')
+  const target = evt.currentTarget.getAttribute('href');
+
   console.log(target);
 
-  const userId = evt.currentTarget.getAttribute('data-user-id')
-  console.log(userId);
-
   let currentTab = document.querySelector(target);
+  console.log(currentTab)
+  // let tabsBtn = document.querySelector('.tabs__block-active');
+
+
+
+  tabsList.forEach(function(item){
+   item.classList.remove('tabs__block-active')
+
+  })
+
   currentTab.classList.add('tabs__block-active');
 
 
@@ -135,7 +125,7 @@ async function initApp() {
     renderTabsContent(users)
     setTabsEvents()
 
-    // TODO отрендерить контент для каждого таба
+
     // TODO сделать первый таб и его контент активным.
     // TODO Получить данные про посты пользователя GET https://jsonplaceholder.typicode.com/posts?userId=1
   } catch (err) {
