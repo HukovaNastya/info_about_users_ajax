@@ -171,10 +171,10 @@ function setActiveTabContent(target) {
 // }
 // filterPosts()
 // TODO getUserPostsHandler
-function getUserPostsHandler({title, body}){
+function getUserPostsHandler({userId, title, body, }){
   return `
-  <div  class="tabs__block-active">
-     <p> title: ${title} </br> body: ${body})</p>
+  <div id="tab_${userId}" data-user-id="${userId}" class="tabs__block-active">
+     <p>  title: ${title} </br> body: ${body})</p>
   </div>
 `;
 }
