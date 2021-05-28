@@ -136,44 +136,44 @@ function tabItemClickHandler(evt) {
   // }
 
   deactivateActiveTabContent()
-  setActiveTabContent(target)
+  setActiveTabContent(target, posts)
 }
 
-// function getUserId (evt){
-//   const userId = evt.currentTarget.getAttribute('data-user-id')
-//   console.log(userId)
-// }
 
 
-function setActiveTabContent(target) {
+
+function setActiveTabContent(target, posts ) {
   const currentTab = document.querySelector(target);
   console.log(currentTab);
-  const id = currentTab.getAttribute('data-user-id');
+  const id = Number(currentTab.getAttribute('data-user-id'));
   console.log(id);
 
-  // const filterPosts = posts.filter(post => post.userId === id);
-  // console.log(filterPosts )
+  const filterPosts = posts.filter(post => post.userId === id);
+  console.log(filterPosts);
 
   // TODO Получить id пользователя из data-user-id
   if (!currentTab) return
   currentTab.classList.add('tabs__block-active');
-  // currentTab += getUserPostsHandler();
-  // // getUserPostsHandler(id)
+
+
+  const currentTabActivePost = document.querySelector('.tabs__block_posts');
+  // currentTabActivePost.forEach (currentTabActivePost => currentTabActivePost.classList.add('tabs__block_posts-active'))
+  console.log(currentTabActivePost )
+  if (!currentTabActivePost ) return;
+  currentTabActivePost.classList.add('tabs__block_posts-active');
+
+  filterPosts.forEach((item, index) => {item.className += "tabs__block_posts-active",  index + 1;});
+
+
 
 }
 
 
-// async function filterPosts (users, posts){
-//   users = await getAllUsers();
-//   posts = await getAllUsersPosts();
-//   const getFilterPosts = posts.filter(post => post.userId === users.id);
-//   console.log(getFilterPosts)
-// }
-// filterPosts()
-// TODO getUserPostsHandler
-function getUserPostsHandler({userId, title, body, }){
+
+
+function getUserPostsHandler({userId, title, body}){
   return `
-  <div id="tab_${userId}" data-user-id="${userId}" class="tabs__block-active">
+  <div id="tab_${userId}" data-user-id="${userId}" class="tabs__block_posts">
      <p>  title: ${title} </br> body: ${body})</p>
   </div>
 `;
@@ -197,12 +197,18 @@ function deactivateActiveTabContent() {
   if (currentActiveTab) {
     currentActiveTab.classList.remove('tabs__block-active')
   }
+  const currentTabActive = document.querySelector('.tabs__block-active .tabs__block_posts-active');
+
+  if (currentTabActive) {
+    currentTabActive.classList.remove('tabs__block_posts-active');
+  }
+
 }
 
 function setFirstActiveTab(users) {
   const [user] = users
   const firstTabContentId = `#tab_${user.id}`
-  setActiveTabContent(firstTabContentId)
+  setActiveTabContent(firstTabContentId, posts)
 }
 
 async function initApp() {
