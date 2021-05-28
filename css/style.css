@@ -63,10 +63,11 @@ body {
 }
 
 .tabs__block {
-	position: relative;
+	position: fixed;;
 	font-size: 18px;
 	line-height: 24px;
-	width: 100%;
+	width: 80%;
+	height: 400px;
 	padding: 20px 5px;
 	white-space: nowrap;
 	/* text-align: center; */
@@ -85,6 +86,7 @@ body {
 	font-size: 18px;
 
 	/* width: 55%; */
+	top: 120px;
 	padding: 20px 5px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
