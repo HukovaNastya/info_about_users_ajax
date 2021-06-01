@@ -55,19 +55,6 @@ async function getAllUsersPosts () {
   }
 }
 
-// getAllUsersPosts();
-// async function getAllPostsOfUsers(id) {
-//   try {
-//     const user = await fetchUsers(id);
-//     const postsPromises = user.id.map((id) => fetchUsersPosts (userId));
-//     const posts = await Promise.all(postsPromises);
-//     return posts;
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
-
-// getAllPostsOfUsers();
 
 // TODO создать функцию получения постов по id пользователя GET https://jsonplaceholder.typicode.com/posts?userId=1
 
@@ -164,8 +151,6 @@ function setActiveTabContent(target, posts ) {
 
   filterPosts.forEach((item, index) => {item.className += "tabs__block_posts-active",  index + 1;});
 
-
-
 }
 
 
@@ -202,6 +187,11 @@ function deactivateActiveTabContent() {
   if (currentTabActive) {
     currentTabActive.classList.remove('tabs__block_posts-active');
   }
+
+}
+
+
+function deactivateActiveTabContentPost(){
 
 }
 
