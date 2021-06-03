@@ -34,7 +34,6 @@ async function getAllUsers() {
 async function fetchUsersPosts (userId){
   try{
     const response = await request(`posts/${userId}`);
-    // console.log(response);
     return response;
   } catch (err) {
     console.log(err);
@@ -55,13 +54,9 @@ async function getAllUsersPosts () {
   }
 }
 
-
-// TODO создать функцию получения постов по id пользователя GET https://jsonplaceholder.typicode.com/posts?userId=1
-
 function renderTabs(users) {
   const wrapper = createTabsWrapper()
   users.forEach(user => wrapper.insertAdjacentHTML('beforeend', createTabItem(user.id, user.name)))
-
   usersContainer.prepend(wrapper)
 }
 
@@ -116,12 +111,6 @@ function geoToString({lat = '', lng = ''} = {}) {
 
 function tabItemClickHandler(evt) {
   const target = evt.currentTarget.getAttribute('href');
-  // const userId = evt.currentTarget.getAttribute('data-user-id')
-  // console.log(userId)
-  // if(users.id === posts.userId){
-  //   renderTabsContentPosts(posts)
-  // }
-
   deactivateActiveTabContent()
   setActiveTabContent(target, posts)
 }
@@ -129,45 +118,43 @@ function tabItemClickHandler(evt) {
 
 
 
-function setActiveTabContent(target, posts ) {
+function setActiveTabContent(target, posts) {
   const currentTab = document.querySelector(target);
-  console.log(currentTab);
-  const id = Number(currentTab.getAttribute('data-user-id'));
-  console.log(id);
+  const currentTabId = Number(currentTab.getAttribute('data-user-id'));
+  const currentTabActivePosts = document.querySelectorAll('.tabs__block_posts');
 
-  const filterPosts = posts.filter(post => post.userId === id);
-  console.log(filterPosts);
+  if (!currentTab) return;
 
-  // TODO Получить id пользователя из data-user-id
-  if (!currentTab) return
   currentTab.classList.add('tabs__block-active');
 
+  currentTabActivePosts.forEach((post) => {
+    const postId = Number(post.getAttribute('data-post-id'));
 
-  const currentTabActivePost = document.querySelector('.tabs__block_posts');
-  // currentTabActivePost.forEach (currentTabActivePost => currentTabActivePost.classList.add('tabs__block_posts-active'))
+    if (post.className.includes('tabs__block_posts-active')) {
+      post.classList.remove('tabs__block_posts-active');
+    } else if (postId === currentTabId) {
+      post.classList.add('tabs__block_posts-active');
+    }
+  });
 
-  if (!currentTabActivePost ) return;
-
-  const renderPosts = filterPosts.forEach((item, index) => { item.className = "tabs__block_posts-active",  index + 1; console.log(item);});
-
+  if (!currentTabActivePost) return;
 }
 
-function getUserPostsHandler({userId, title, body}){
+function getUserPostsHandler({ userId, title, body, id }) {
   return `
-  <div id="tab_${userId}" data-user-id="${userId}" class="tabs__block_posts">
-     <p>  title: ${title} </br> body: ${body})</p>
+  <div id="post_${userId}" data-post-id="${userId}" class="tabs__block_posts">
+    <p> post number ${id}</p>
+     <p> title: ${title}</p>
+     <p>  body: ${body})</p>
   </div>
 `;
 }
 
-
 function renderTabsContentPosts(posts) {
   const tabsBlock = createTabsContentBody();
-
-  // console.log(posts)
   posts.forEach(post => tabsBlock.insertAdjacentHTML('beforeEnd', getUserPostsHandler(post)));
   tabsBody.appendChild(tabsBlock);
-  console.log(tabsBody)
+  console.log(tabsBody);
 }
 
 
@@ -183,12 +170,6 @@ function deactivateActiveTabContent() {
   if (currentTabActive) {
     currentTabActive.classList.remove('tabs__block_posts-active');
   }
-
-}
-
-
-function deactivateActiveTabContentPost(){
-
 }
 
 function setFirstActiveTab(users) {
@@ -210,7 +191,5 @@ async function initApp() {
     console.error(err)
   }
 }
-
-
 
 initApp();
