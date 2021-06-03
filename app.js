@@ -145,16 +145,12 @@ function setActiveTabContent(target, posts ) {
 
   const currentTabActivePost = document.querySelector('.tabs__block_posts');
   // currentTabActivePost.forEach (currentTabActivePost => currentTabActivePost.classList.add('tabs__block_posts-active'))
-  console.log(currentTabActivePost )
-  if (!currentTabActivePost ) return;
-  currentTabActivePost.classList.add('tabs__block_posts-active');
 
-  filterPosts.forEach((item, index) => {item.className += "tabs__block_posts-active",  index + 1;});
+  if (!currentTabActivePost ) return;
+
+  const renderPosts = filterPosts.forEach((item, index) => { item.className = "tabs__block_posts-active",  index + 1; console.log(item);});
 
 }
-
-
-
 
 function getUserPostsHandler({userId, title, body}){
   return `
